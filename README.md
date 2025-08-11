@@ -28,7 +28,7 @@ The model is trained using multiple classifiers (`RandomForest`, `XGBoost`, `SVM
 
 ## 📁 Project Structure
 
-heart-disease-prediction/
+<!-- heart-disease-prediction/
 ├── app.py
 ├── train_model.py
 ├── requirements.txt
@@ -42,7 +42,7 @@ heart-disease-prediction/
 ├── reports/
 │ ├── confusion_matrix.png
 │ └── classification_report.txt
-└── README.md
+└── README.md -->
 
 
 ---
