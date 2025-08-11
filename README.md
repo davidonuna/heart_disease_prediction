@@ -3,7 +3,7 @@
 An interactive and mobile-friendly web application to predict the presence of heart disease based on medical attributes. Built using **Streamlit** and trained using **Optuna-optimized machine learning models**.
 
 ### 🚀 Demo
-- **Streamlit Cloud**: [https://your-streamlit-link](https://your-streamlit-link)
+- **Streamlit Cloud**: [https://share.streamlit.io/user/davidonuna](https://share.streamlit.io/user/davidonuna)
 - **Render**: [https://your-render-link](https://your-render-link)
 
 ---
@@ -51,7 +51,7 @@ The model is trained using multiple classifiers (`RandomForest`, `XGBoost`, `SVM
 
 1. Clone the repo
 ```bash
-git clone https://github.com/your-username/heart-disease-prediction.git
+git clone https://github.com/davidonuna/heart_disease_prediction.git
 cd heart-disease-prediction
 
 
