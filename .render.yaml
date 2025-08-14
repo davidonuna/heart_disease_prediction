@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: heart-disease-predictor
+    env: docker
+    plan: free
+    region: oregon  # or choose any other available region
+    dockerfilePath: ./Dockerfile
+    autoDeploy: true
+    envVars:
+      - key: PYTHONUNBUFFERED
+        value: "1"
+      - key: PYTHONDONTWRITEBYTECODE
+        value: "1"
