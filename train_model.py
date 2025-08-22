@@ -16,7 +16,7 @@ import lightgbm as lgb
 import xgboost as xgb
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay, classification_report
 import matplotlib.pyplot as plt
-import os
+import os          
 
 # Load dataset
 df = pd.read_csv("data/heart_disease.csv")

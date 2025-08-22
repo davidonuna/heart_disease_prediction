@@ -2,9 +2,9 @@ Classification Report
 =====================
                 precision    recall  f1-score   support
 
-No Disease (0)       0.89      0.86      0.88        29
-   Disease (1)       0.88      0.91      0.89        32
+No Disease (0)       0.86      0.83      0.84        29
+   Disease (1)       0.85      0.88      0.86        32
 
-      accuracy                           0.89        61
-     macro avg       0.89      0.88      0.88        61
-  weighted avg       0.89      0.89      0.89        61
+      accuracy                           0.85        61
+     macro avg       0.85      0.85      0.85        61
+  weighted avg       0.85      0.85      0.85        61
