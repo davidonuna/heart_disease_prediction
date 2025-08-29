@@ -4,7 +4,7 @@
 import pandas as pd
 import pickle
 import optuna
-
+from sqlalchemy import create_engine
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
@@ -18,8 +18,16 @@ from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay, classifica
 import matplotlib.pyplot as plt
 import os          
 
-# Load dataset
-df = pd.read_csv("data/heart_disease.csv")
+
+# Coonect to data lake-----postgress database running in docker 
+engine = create_engine('postgresql://airflow:airflow@localhost/postgres')
+
+# Read the data
+df=pd.read_sql("SELECT * FROM heart_disease_data", engine)
+df
+
+
+
 X = df.drop('target', axis=1)
 y = df['target']
 

@@ -3,7 +3,7 @@ services:
     name: heart-disease-predictor
     env: docker
     plan: free
-    region: oregon  # or choose any other available region
+    region: oregon  # any other available region
     dockerfilePath: ./Dockerfile
     autoDeploy: true
     envVars:

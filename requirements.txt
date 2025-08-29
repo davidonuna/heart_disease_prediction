@@ -7,4 +7,7 @@ xgboost
 lightgbm
 optuna
 streamlit
+psycopg2-binary
+sqlalchemy
+
 
