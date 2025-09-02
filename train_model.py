@@ -19,7 +19,7 @@ import matplotlib.pyplot as plt
 import os          
 
 
-# Coonect to data lake-----postgress database running in docker 
+# Coonect to data warehouse-----postgress database running in docker 
 engine = create_engine('postgresql://airflow:airflow@localhost/postgres')
 
 # Read the data
