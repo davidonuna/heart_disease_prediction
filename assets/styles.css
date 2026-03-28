@@ -1,65 +1,262 @@
-styles.css
-body {
-    background-color: #f4f7fc;
-    font-family: 'Arial', sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --primary: #e63946;
+    --secondary: #457b9d;
+    --success: #2a9d8f;
+    --warning: #f4a261;
+    --bg: #f8f9fa;
+    --card-bg: #ffffff;
+    --text: #2b2d42;
+    --text-muted: #8d99ae;
+}
+
+[data-testid="stApp"] {
+    background: var(--bg);
+    font-family: 'Inter', sans-serif;
+}
+
+[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, #1d3557 0%, #457b9d 100%);
+    color: white;
+}
+
+[data-testid="stSidebar"] .stMarkdown {
+    color: white;
+}
+
+[data-testid="stSidebar"] a {
+    color: #a8dadc !important;
+}
+
+[data-testid="stSidebar"] [data-testid="stImage"] img {
+    border-radius: 12px;
+    background: rgba(255,255,255,0.1);
+    padding: 8px;
+}
+
+[data-testid="stHeader"] {
+    background: linear-gradient(90deg, #e63946, #f4a261);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .stTitle {
-    color: #4C4C4C;
-    font-size: 32px;
-    font-weight: bold;
-    text-align: center;
+    background: linear-gradient(90deg, #1d3557, #457b9d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700 !important;
 }
 
-.stHeader {
-    color: #1f77b4;
-    font-size: 24px;
-    text-align: center;
+[data-testid="stTabBar"] button {
+    font-weight: 600;
+    border-radius: 8px 8px 0 0;
 }
 
-.stText {
+[data-testid="stTabBar"] button[data-selected="true"] {
+    background: linear-gradient(90deg, #e63946, #f4a261) !important;
+    color: white !important;
+}
+
+.stTabs [data-baseweb="tab-list"] {
+    gap: 8px;
+}
+
+.stTabs [data-baseweb="tab"] {
+    height: 50px;
+    padding: 0 24px;
+    background: white;
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    font-weight: 500;
+}
+
+div[data-testid="stForm"] {
+    background: var(--card-bg);
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    border: 1px solid #e9ecef;
+}
+
+.stButton > button {
+    background: linear-gradient(90deg, #e63946, #f4a261) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 12px !important;
+    padding: 12px 24px !important;
+    font-weight: 600 !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 12px rgba(230, 57, 70, 0.3) !important;
+}
+
+.stButton > button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(230, 57, 70, 0.4) !important;
+}
+
+div[data-testid="stForm"] .stButton > button:nth-child(2) {
+    background: #6c757d !important;
+    box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3) !important;
+}
+
+div[data-testid="stForm"] .stButton > button:nth-child(2):hover {
+    box-shadow: 0 6px 20px rgba(108, 117, 125, 0.4) !important;
+}
+
+[data-testid="stMetric"] {
+    background: white;
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border: 1px solid #e9ecef;
+}
+
+[data-testid="stMetricLabel"] {
+    color: var(--text-muted) !important;
+    font-size: 14px !important;
+}
+
+[data-testid="stMetricValue"] {
+    font-weight: 700 !important;
+    font-size: 24px !important;
+}
+
+[data-testid="stProgress"] > div > div {
+    background: linear-gradient(90deg, #2a9d8f, #2a9d8f);
+    border-radius: 8px;
+}
+
+.stSuccess {
+    background: #d8f3dc !important;
+    color: #1b4332 !important;
+    border-radius: 12px;
+    border: 1px solid #b7e4c7;
+}
+
+.stError {
+    background: #ffe8e8 !important;
+    color: #9d0208 !important;
+    border-radius: 12px;
+    border: 1px solid #ffb3b3;
+}
+
+.stWarning {
+    background: #fff3cd !important;
+    color: #856404 !important;
+    border-radius: 12px;
+    border: 1px solid #ffeeba;
+}
+
+.stInfo {
+    background: #e7f5ff !important;
+    color: #1864ab !important;
+    border-radius: 12px;
+    border: 1px solid #a5d8ff;
+}
+
+div[data-testid="stExpander"] {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #e9ecef;
+}
+
+div[data-testid="stExpander"] summary {
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+[data-testid="stRadio"] > div {
+    gap: 12px;
+}
+
+[data-testid="stRadio"] label {
+    background: #f8f9fa;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+[data-testid="stRadio"] label:hover {
+    background: #e9ecef;
+}
+
+[data-testid="stRadio"] input:checked + div {
+    background: linear-gradient(90deg, #e63946, #f4a261) !important;
+    color: white !important;
+}
+
+[data-testid="stSelectbox"] > div > div {
+    border-radius: 8px;
+}
+
+[data-testid="stNumberInput"] > div > div > div > input {
+    border-radius: 8px;
+}
+
+.placeholder-box {
+    background: white;
+    padding: 60px 40px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    border: 2px dashed #dee2e6;
+}
+
+.placeholder-box h3 {
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.placeholder-box p {
+    color: #adb5bd;
     font-size: 16px;
-    color: #333333;
-    text-align: center;
 }
 
-input[type="number"] {
-    margin: 10px;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    width: 80%;
-    font-size: 16px;
-    text-align: center;
+[data-testid="stDataFrame"] {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 
-.stButton {
-    background-color: #1f77b4;
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
+div[data-testid="stTable"] {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+div[data-testid="stTable"] table {
+    background: white;
+}
+
+div[data-testid="stTable"] th {
+    background: #1d3557 !important;
+    color: white !important;
+    font-weight: 600;
+}
+
+div[data-testid="stTable"] td {
+    padding: 12px 16px;
+}
+
+.stMarkdown h3 {
+    color: #1d3557;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.stMarkdown h4 {
+    color: #457b9d;
+    font-weight: 500;
     margin-top: 20px;
+    margin-bottom: 12px;
 }
 
-.stButton:hover {
-    background-color: #4057d7;
+[data-testid="stDivider"] {
+    margin: 24px 0;
 }
 
-
-/* styles.css */
-/* body {
-    background-color: #f8f9fa;
-    font-family: 'Segoe UI', sans-serif;
+div[class*="css-1r6slb0"] {
+    border-radius: 8px;
 }
-
-h1 {
-    color: #0d6efd;
-}
-
-.stButton>button {
-    background-color: #0d6efd;
-    color: white;
-} */
