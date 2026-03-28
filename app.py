@@ -1,7 +1,11 @@
 
+import os
 import streamlit as st
 import pickle
 import pandas as pd
+
+MODEL_PATH = os.getenv('MODEL_PATH', 'model/best_model_pipeline.pkl')
+STYLES_PATH = os.getenv('STYLES_PATH', 'assets/styles.css')
 
 st.set_page_config(
     page_title="Heart Disease Prediction",
@@ -10,11 +14,37 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-with open('model/best_model_pipeline.pkl', 'rb') as f:
-    model = pickle.load(f)
+@st.cache_resource
+def load_model(model_path):
+    try:
+        with open(model_path, 'rb') as f:
+            return pickle.load(f)
+    except FileNotFoundError:
+        st.error(f"❌ Model file not found: {model_path}")
+        return None
+    except Exception as e:
+        st.error(f"❌ Error loading model: {str(e)}")
+        return None
 
-with open("assets/styles.css") as f:
-    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+@st.cache_resource
+def load_styles(styles_path):
+    try:
+        with open(styles_path, 'r') as f:
+            return f.read()
+    except FileNotFoundError:
+        st.warning(f"⚠️ Styles file not found: {styles_path}")
+        return ""
+    except Exception as e:
+        st.warning(f"⚠️ Error loading styles: {str(e)}")
+        return ""
+
+model = load_model(MODEL_PATH)
+styles = load_styles(STYLES_PATH)
+if styles:
+    st.markdown(f"<style>{styles}</style>", unsafe_allow_html=True)
+
+if model is None:
+    st.stop()
 
 with st.sidebar:
     st.image("https://img.icons8.com/fluency/96/heart-with-pulse.png", width=64)
@@ -67,57 +97,61 @@ with tab1:
 
     with col2:
         if submit:
-            input_data = {
-                "age": age,
-                "sex": 1 if sex == "Male" else 0,
-                "cp": ["Typical Angina", "Atypical Angina", "Non-Anginal Pain", "Asymptomatic"].index(chest_pain),
-                "trestbps": resting_blood_pressure,
-                "chol": serum_cholesterol,
-                "fbs": 1 if fasting_blood_sugar == "Yes" else 0,
-                "restecg": ["Normal", "ST-T wave abnormality", "Left ventricular hypertrophy"].index(resting_ecg),
-                "thalach": max_heart_rate,
-                "exang": 1 if exercise_induced_angina == "Yes" else 0,
-                "oldpeak": oldpeak,
-                "slope": ["Upsloping", "Flat", "Downsloping"].index(slope),
-                "ca": num_vessels,
-                "thal": ["Normal", "Fixed Defect", "Reversible Defect"].index(thalassemia)
-            }
-            
-            input_df = pd.DataFrame([input_data])
-            prediction = model.predict(input_df)[0]
-            probabilities = model.predict_proba(input_df)[0]
-            prob_heart_disease = probabilities[1]
-            prob_no_disease = probabilities[0]
-            
-            st.markdown("### 📊 Prediction Results")
-            
-            if prediction == 1:
-                st.error("💔 **Heart Disease Detected**")
-                st.progress(int(prob_heart_disease * 100))
-                st.markdown(f"**Confidence:** {prob_heart_disease * 100:.1f}%")
+            try:
+                input_data = {
+                    "age": age,
+                    "sex": 1 if sex == "Male" else 0,
+                    "cp": ["Typical Angina", "Atypical Angina", "Non-Anginal Pain", "Asymptomatic"].index(chest_pain),
+                    "trestbps": resting_blood_pressure,
+                    "chol": serum_cholesterol,
+                    "fbs": 1 if fasting_blood_sugar == "Yes" else 0,
+                    "restecg": ["Normal", "ST-T wave abnormality", "Left ventricular hypertrophy"].index(resting_ecg),
+                    "thalach": max_heart_rate,
+                    "exang": 1 if exercise_induced_angina == "Yes" else 0,
+                    "oldpeak": oldpeak,
+                    "slope": ["Upsloping", "Flat", "Downsloping"].index(slope),
+                    "ca": num_vessels,
+                    "thal": ["Normal", "Fixed Defect", "Reversible Defect"].index(thalassemia)
+                }
                 
-                st.warning("⚠️ Please consult a cardiologist for further evaluation.")
+                input_df = pd.DataFrame([input_data])
+                prediction = model.predict(input_df)[0]
+                probabilities = model.predict_proba(input_df)[0]
+                prob_heart_disease = probabilities[1]
+                prob_no_disease = probabilities[0]
                 
-                col_a, col_b = st.columns(2)
-                with col_a:
-                    st.metric("Heart Disease Risk", f"{prob_heart_disease * 100:.1f}%", delta="High", delta_color="inverse")
-                with col_b:
-                    st.metric("Healthy", f"{prob_no_disease * 100:.1f}%")
-            else:
-                st.success("💚 **No Heart Disease Detected**")
-                st.progress(int(prob_no_disease * 100))
-                st.markdown(f"**Confidence:** {prob_no_disease * 100:.1f}%")
+                st.markdown("### 📊 Prediction Results")
                 
-                st.info("✅ Continue maintaining a healthy lifestyle!")
+                if prediction == 1:
+                    st.error("💔 **Heart Disease Detected**")
+                    st.progress(int(prob_heart_disease * 100))
+                    st.markdown(f"**Confidence:** {prob_heart_disease * 100:.1f}%")
+                    
+                    st.warning("⚠️ Please consult a cardiologist for further evaluation.")
+                    
+                    col_a, col_b = st.columns(2)
+                    with col_a:
+                        st.metric("Heart Disease Risk", f"{prob_heart_disease * 100:.1f}%", delta="High", delta_color="inverse")
+                    with col_b:
+                        st.metric("Healthy", f"{prob_no_disease * 100:.1f}%")
+                else:
+                    st.success("💚 **No Heart Disease Detected**")
+                    st.progress(int(prob_no_disease * 100))
+                    st.markdown(f"**Confidence:** {prob_no_disease * 100:.1f}%")
+                    
+                    st.info("✅ Continue maintaining a healthy lifestyle!")
+                    
+                    col_a, col_b = st.columns(2)
+                    with col_a:
+                        st.metric("Heart Disease Risk", f"{prob_heart_disease * 100:.1f}%")
+                    with col_b:
+                        st.metric("Healthy", f"{prob_no_disease * 100:.1f}%", delta="Low", delta_color="normal")
                 
-                col_a, col_b = st.columns(2)
-                with col_a:
-                    st.metric("Heart Disease Risk", f"{prob_heart_disease * 100:.1f}%")
-                with col_b:
-                    st.metric("Healthy", f"{prob_no_disease * 100:.1f}%", delta="Low", delta_color="normal")
-            
-            with st.expander("📋 View Input Summary"):
-                st.json(input_data)
+                with st.expander("📋 View Input Summary"):
+                    st.json(input_data)
+                    
+            except Exception as e:
+                st.error(f"❌ Prediction failed: {str(e)}")
         else:
             st.markdown("""
             <div class="placeholder-box">

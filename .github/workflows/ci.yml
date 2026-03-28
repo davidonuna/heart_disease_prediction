@@ -1,0 +1,89 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    name: Lint Code
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          pip install flake8 black isort
+      
+      - name: Check Python syntax
+        run: |
+          flake8 app.py train_model.py --count --select=E9,F63,F7,F82 --show-source --statistics
+          flake8 app.py train_model.py --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+      
+      - name: Check formatting with Black
+        run: |
+          black --check app.py train_model.py || true
+      
+      - name: Check import order with isort
+        run: |
+          isort --check-only app.py train_model.py || true
+
+  test:
+    name: Test Application
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+      
+      - name: Verify model file exists
+        run: |
+          ls -la model/best_model_pipeline.pkl
+      
+      - name: Verify app can be imported
+        run: |
+          python -c "import app; print('App imports successfully')"
+
+  docker:
+    name: Docker Build
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      
+      - name: Build Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: false
+          tags: heart-disease-prediction:test
+          load: true
+      
+      - name: Verify Docker image runs
+        run: |
+          docker run -d --name test-app -p 8501:8501 heart-disease-prediction:test
+          sleep 5
+          docker logs test-app
+          docker stop test-app

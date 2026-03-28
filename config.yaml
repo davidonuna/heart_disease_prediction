@@ -1,0 +1,75 @@
+app:
+  title: "Heart Disease Prediction"
+  favicon: "💓"
+  
+model:
+  path: "model/best_model_pipeline.pkl"
+  
+styles:
+  path: "assets/styles.css"
+
+hospital:
+  name: "Nyali Children Hospital"
+  clinic: "Bi-Cross Heart Clinic"
+
+features:
+  - name: "age"
+    label: "Age"
+    type: "number"
+  - name: "sex"
+    label: "Sex"
+    type: "radio"
+    options: ["Male", "Female"]
+  - name: "cp"
+    label: "Chest Pain Type"
+    type: "select"
+    options: ["Typical Angina", "Atypical Angina", "Non-Anginal Pain", "Asymptomatic"]
+  - name: "trestbps"
+    label: "Resting Blood Pressure (mm Hg)"
+    type: "number"
+    min: 80
+    max: 200
+    default: 120
+  - name: "chol"
+    label: "Serum Cholesterol (mg/dl)"
+    type: "number"
+    min: 100
+    max: 400
+    default: 200
+  - name: "fbs"
+    label: "Fasting Blood Sugar > 120 mg/dl"
+    type: "radio"
+    options: ["Yes", "No"]
+  - name: "restecg"
+    label: "Resting ECG"
+    type: "select"
+    options: ["Normal", "ST-T wave abnormality", "Left ventricular hypertrophy"]
+  - name: "thalach"
+    label: "Max Heart Rate Achieved"
+    type: "number"
+    min: 60
+    max: 220
+    default: 150
+  - name: "exang"
+    label: "Exercise Induced Angina"
+    type: "radio"
+    options: ["Yes", "No"]
+  - name: "oldpeak"
+    label: "Oldpeak (ST depression)"
+    type: "number"
+    min: 0.0
+    max: 10.0
+    step: 0.1
+    default: 1.0
+  - name: "slope"
+    label: "Slope of ST Segment"
+    type: "select"
+    options: ["Upsloping", "Flat", "Downsloping"]
+  - name: "ca"
+    label: "Number of Major Vessels"
+    type: "select"
+    options: [0, 1, 2, 3]
+  - name: "thal"
+    label: "Thalassemia"
+    type: "select"
+    options: ["Normal", "Fixed Defect", "Reversible Defect"]
